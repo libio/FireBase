@@ -28,7 +28,16 @@
 	<link rel="stylesheet" type="text/css" href="public/css/util.css">
     <link rel="stylesheet" type="text/css" href="public/css/main.css">
 <!--==================================Conexion a firebase=====================================--> 
-    <script src="bower_components/firebase/firebase.js"></script>
+	<script src="bower_components/firebase/firebase.js"></script>
+	<script>
+		var ref = FireBase("https://mi-nombre-b4769.firebaseio.com/");
+		var obj = new {
+			name: "Juego de mesas",
+			company: "unsaac",
+			email: "134541@unsaac.edu.pe"
+		};
+		ref.set(obj);
+	</script>
 
 <!--===============================================================================================-->
 </head>
@@ -43,7 +52,7 @@
 				</span>
 
 				<div class="wrap-input100 validate-input bg1" data-validate="Please Type Your Name">
-					<span class="label-input100">FULL NAME *</span>
+					<span class="label-input100">Nombre Completo *</span>
 					<input class="input100" type="text" name="name" placeholder="Enter Your Name">
 				</div>
 
@@ -53,7 +62,7 @@
 				</div>
 
 				<div class="wrap-input100 bg1 rs1-wrap-input100">
-					<span class="label-input100">Phone</span>
+					<span class="label-input100">Telefono</span>
 					<input class="input100" type="text" name="phone" placeholder="Enter Number Phone">
 				</div>
 
