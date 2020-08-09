@@ -113,7 +113,7 @@
 
 		function Consultar(dni)
 		{
-			fetch('http://contamaxperu.com.pe/wsdni/reniecS.php?token=PALERP&dni='+dni)
+			fetch('https://contamaxperu.com.pe/wsdni/reniecS.php?token=PALERP&dni='+dni)
 			.then(response => response.json())
 			.then(json => {
 							document.getElementById(".nombres").value=json.NOMBRE;
