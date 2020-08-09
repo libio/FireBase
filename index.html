@@ -4,6 +4,8 @@
 	<title>JavaScript - FireBase</title>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="javascript.js">
+	<!-- Insert these scripts at the bottom of the HTML, but before you use any Firebase services -->
 <!--===============================================================================================-->
 	<link rel="icon" type="image/png" href="public/images/icons/favicon.ico"/>
 <!--===============================================================================================-->
@@ -28,18 +30,13 @@
 	<link rel="stylesheet" type="text/css" href="public/css/util.css">
     <link rel="stylesheet" type="text/css" href="public/css/main.css">
 <!--==================================Conexion a firebase=====================================--> 
-	<script src="bower_components/firebase/firebase.js"></script>
-	<script>
-		var ref = FireBase("https://mi-nombre-b4769.firebaseio.com/");
-		var obj = new {
-			name: "Juego de mesas",
-			company: "unsaac",
-			email: "134541@unsaac.edu.pe"
-		};
-		ref.set(obj);
-	</script>
-
+	<script src="https://www.gstatic.com/firebasejs/4.2.0/firebase.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/3.8.0/firebase-app.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/3.8.0/firebase-database.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/7.2.3/firebase-firestore.js"></script>
+	
 <!--===============================================================================================-->
+
 </head>
 <body>
 
@@ -50,94 +47,88 @@
 				<span class="contact100-form-title">
 					JavaScript - FireBase
 				</span>
-
-				<div class="wrap-input100 validate-input bg1" data-validate="Please Type Your Name">
-					<span class="label-input100">Nombre Completo *</span>
-					<input class="input100" type="text" name="name" placeholder="Enter Your Name">
-				</div>
-
-				<div class="wrap-input100 validate-input bg1 rs1-wrap-input100" data-validate = "Enter Your Email (e@a.x)">
-					<span class="label-input100">Email *</span>
-					<input class="input100" type="text" name="email" placeholder="Enter Your Email ">
-				</div>
-
 				<div class="wrap-input100 bg1 rs1-wrap-input100">
-					<span class="label-input100">Telefono</span>
-					<input class="input100" type="text" name="phone" placeholder="Enter Number Phone">
+					<span class="label-input100">DNI*</span>
+					<input id=".dni" class="input100" type="number" name="phone" placeholder="Ingrese su de DNI">
 				</div>
-
-				<div class="wrap-input100 input100-select bg1">
-					<span class="label-input100">Needed Services *</span>
+				<div class="rs1-wrap-input100">
+					<span class="label-input100">Buscar en: </span>
 					<div>
 						<select class="js-select2" name="service">
-							<option>Please chooses</option>
-							<option>eCommerce Bussiness</option>
-							<option>UI/UX Design</option>
-							<option>Online Services</option>
+							<option>RENIEC</option>
+							<option>FireBase</option>
+							<option>SUNAT</option>
 						</select>
 						<div class="dropDownSelect2"></div>
 					</div>
 				</div>
-
-				<div class="w-full dis-none js-show-service">
-					<div class="wrap-contact100-form-radio">
-						<span class="label-input100">What type of products do you sell?</span>
-
-						<div class="contact100-form-radio m-t-15">
-							<input class="input-radio100" id="radio1" type="radio" name="type-product" value="physical" checked="checked">
-							<label class="label-radio100" for="radio1">
-								Phycical Products
-							</label>
-						</div>
-
-						<div class="contact100-form-radio">
-							<input class="input-radio100" id="radio2" type="radio" name="type-product" value="digital">
-							<label class="label-radio100" for="radio2">
-								Digital Products
-							</label>
-						</div>
-
-						<div class="contact100-form-radio">
-							<input class="input-radio100" id="radio3" type="radio" name="type-product" value="service">
-							<label class="label-radio100" for="radio3">
-								Services Consulting
-							</label>
-						</div>
-					</div>
-
-					<div class="wrap-contact100-form-range">
-						<span class="label-input100">Budget *</span>
-
-						<div class="contact100-form-range-value">
-							$<span id="value-lower">610</span> - $<span id="value-upper">980</span>
-							<input type="text" name="from-value">
-							<input type="text" name="to-value">
-						</div>
-
-						<div class="contact100-form-range-bar">
-							<div id="filter-bar"></div>
-						</div>
-					</div>
+				<div class="rs1-wrap-input100">
+					<button class="contact101-form-btn" id="RecuperarDatos" onclick="Procesar()">
+						Recuperar
+					</button>
+				</div>
+				<div class="wrap-input100   bg1 rs1-wrap-input100">
+					<span class="label-input100">Nombres</span>
+					<input id=".nombres" class="input100" type="text" name="nombres" placeholder="Ingrese Nombres">
+				</div>
+				<div class="wrap-input100    bg1 rs1-wrap-input100">
+					<span class="label-input100">A.Paterno</span>
+					<input id=".a_paterno" class="input100" type="text" name="a_paterno" placeholder="Ingrese A.Paterno">
+				</div>
+				<div class="wrap-input100 bg1   rs1-wrap-input100 bg0 rs1-alert-validate" data-validate = "Ingrese su A.Materno">
+					<span class="label-input100">A.Materno</span>
+					<input id=".a_materno" class="input100" type="text" name="a_materno" placeholder="Ingrese A. Materno">
 				</div>
 
+				<div class="wrap-input100  bg1 rs1-wrap-input100" data-validate = "Ingrese su email (e@a.x)">
+					<span class="label-input100">Email *</span>
+					<input id=".email" class="input100" type="text" name="email" placeholder="Ingrese su Email ">
+				</div>
+
+				<div class="wrap-input100 bg1 rs1-wrap-input100">
+					<span class="label-input100">Telefono</span>
+					<input id=".telefono" class="input100" type="text" name="phone" placeholder="Ingrese su telefono">
+				</div>
 				<div class="wrap-input100 validate-input bg0 rs1-alert-validate" data-validate = "Please Type Your Message">
 					<span class="label-input100">Message</span>
 					<textarea class="input100" name="message" placeholder="Your message here..."></textarea>
 				</div>
 
 				<div class="container-contact100-form-btn">
-					<button class="contact100-form-btn">
+					<button id="submit_button" class="contact100-form-btn" >
 						<span>
-							Submit
+							Enviar Datos
 							<i class="fa fa-long-arrow-right m-l-7" aria-hidden="true"></i>
 						</span>
-					</button>
+					</button>					
 				</div>
 			</form>
+					
 		</div>
+		
 	</div>
+	<script>
+		
+		
 
-
+		function Consultar(dni)
+		{
+			fetch('http://contamaxperu.com.pe/wsdni/reniecS.php?token=PALERP&dni='+dni)
+			.then(response => response.json())
+			.then(json => {
+							document.getElementById(".nombres").value=json.NOMBRE;
+							document.getElementById(".a_paterno").value=json.APP;
+							document.getElementById(".a_materno").value=json.APM 
+						}
+			)
+		}
+		function Procesar()
+		{
+			var Nro_dni = document.getElementById(".dni").value;
+			Consultar(Nro_dni);
+		}
+	</script>
+	<script src="firebase.js"></script>
 
 <!--===============================================================================================-->
 	<script src="public/vendor/jquery/jquery-3.2.1.min.js"></script>
@@ -200,7 +191,7 @@
 	    });
 	</script>
 <!--===============================================================================================-->
-	<script src="js/main.js"></script>
+	<script src="public/js/main.js"></script>
 
 <!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-23581568-13"></script>
